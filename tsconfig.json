@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "NodeNext",
+    "target": "es6",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true, // allow import json file
+    "moduleResolution": "nodenext"
+  },
+  "include": ["src/**/*.ts", "src/ultil/ultil.lib.js"],
+  "exclude": ["node_modules"]
+}
