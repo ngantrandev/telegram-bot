@@ -1,6 +1,9 @@
 import model from '@/src/configs/GoogleGenerativeAI';
 
 export const askGemini = async (message: string, promt = '') => {
+  if (!message || message == '') {
+    return 'Sorry, you need to say something.';
+  }
   const generatedContent = `${promt} ${message}`;
 
   try {

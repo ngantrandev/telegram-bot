@@ -2,25 +2,35 @@ import { Stream } from 'stream';
 import TelegramBot from 'node-telegram-bot-api';
 
 import bot from '@/src/configs/TelegramBot';
+import { SupportedCommands } from '@/src/helpers/utils';
 
-const setBotCommand = async (
-  commands: TelegramBot.BotCommand[],
-  options?: {
-    language_code?: string;
-    scope?: TelegramBot.BotCommandScope;
-  }
-) => {
+/**
+ *
+ * @returns boolean: true if bot commands are set successfully, false otherwise
+ * @description Set bot commands
+ *
+ */
+const setBotCommand = async (): Promise<boolean> => {
   try {
-    const result = await bot.setMyCommands(commands, options);
+    const botCommands: TelegramBot.BotCommand[] = [];
+
+    for (const item of Object.values(SupportedCommands)) {
+      const command = item.slug.replace('/', '');
+      const description = item.description;
+
+      botCommands.push({ command, description });
+    }
+
+    const result = await bot.setMyCommands(botCommands, {});
 
     if (result) {
-      console.log('Bot commands set successfully');
+      return true;
     } else {
-      console.log('Failed to set bot commands');
+      return false;
     }
   } catch (error) {
-    console.error(error);
-    console.log('Failed to set bot commands');
+    console.log(error);
+    return false;
   }
 };
 

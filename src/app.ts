@@ -1,11 +1,23 @@
 import bot from '@/src/configs/TelegramBot';
-
 import { handleMessage } from '@/src/controllers/message.controller';
 import { SupportedCommands } from '@/src/helpers/utils';
 import {
   handleAskCommand,
   handleStartCommand,
 } from '@/src/controllers/commands.controller';
+import { setBotCommand } from '@/src/services/BotService';
+
+setBotCommand()
+  .then((success) => {
+    if (success) {
+      console.log('Bot commands set successfully');
+    } else {
+      console.error('Failed to set bot commands');
+    }
+  })
+  .catch((error) => {
+    console.error('Failed to set bot commands', error);
+  });
 
 bot.onText(SupportedCommands.start.regex, handleStartCommand);
 

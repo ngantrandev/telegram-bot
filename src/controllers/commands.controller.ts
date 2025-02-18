@@ -2,7 +2,10 @@ import { Message } from 'node-telegram-bot-api';
 
 import { sendChatAction, sendMessage } from '@/src/services/BotService';
 import { askGemini } from '@/src/services/AIService';
-import { generateChunkedResponse } from '@/src/helpers/utils';
+import {
+  generateChunkedResponse,
+  SupportedCommands,
+} from '@/src/helpers/utils';
 
 export const handleAskCommand = async (msg: Message) => {
   try {
@@ -18,9 +21,23 @@ export const handleAskCommand = async (msg: Message) => {
       return;
     }
 
+    // remove first command word
+    const generativeInput = message
+      .replace(SupportedCommands.ask.slug, '')
+      .trim();
+
     await sendChatAction(chatId, 'typing');
 
-    const generativeResponse = await askGemini(message);
+    if (!generativeInput) {
+      await sendMessage(chatId, SupportedCommands.ask.example, {
+        reply_to_message_id: msg.message_id,
+        parse_mode: 'Markdown',
+      });
+
+      return;
+    }
+
+    const generativeResponse = await askGemini(generativeInput);
 
     const resultArray = await generateChunkedResponse(generativeResponse);
 

@@ -2,7 +2,10 @@ import { Message } from 'node-telegram-bot-api';
 
 import { askGemini } from '@/src/services/AIService';
 import { sendChatAction, sendMessage } from '@/src/services/BotService';
-import { generateChunkedResponse } from '@/src/helpers/utils';
+import {
+  generateChunkedResponse,
+  SupportedCommands,
+} from '@/src/helpers/utils';
 
 export const handleMessage = async (msg: Message) => {
   // only handle message from private chat
@@ -10,6 +13,72 @@ export const handleMessage = async (msg: Message) => {
     return;
   }
 
+  for (const command of Object.values(SupportedCommands)) {
+    if (command.regex.test(msg.text || '')) {
+      return;
+    }
+  }
+
+  try {
+    if (msg.text) {
+      await processTextMessage(msg);
+    } else if (msg.audio) {
+      await processAudioMessage(msg);
+    } else if (msg.document) {
+      await processDocumentMessage(msg);
+    } else if (msg.photo) {
+      await processPhotoMessage(msg);
+    } else if (msg.sticker) {
+      await processStickerMessage(msg);
+    } else if (msg.video) {
+      await processVideoMessage(msg);
+    } else if (msg.voice) {
+      await processVoiceMessage(msg);
+    } else if (msg.contact) {
+      await processContactMessage(msg);
+    } else if (msg.location) {
+      await processLocationMessage(msg);
+    } else if (msg.new_chat_members) {
+      await processNewChatMembers(msg);
+    } else if (msg.left_chat_member) {
+      await processLeftChatMember(msg);
+    } else if (msg.new_chat_title) {
+      await processNewChatTitle(msg);
+    } else if (msg.new_chat_photo) {
+      await processNewChatPhoto(msg);
+    } else if (msg.delete_chat_photo) {
+      await processDeleteChatPhoto(msg);
+    } else if (msg.group_chat_created) {
+      await processGroupChatCreated(msg);
+    } else if (msg.game) {
+      await processGameMessage(msg);
+    } else if (msg.pinned_message) {
+      await processPinnedMessage(msg);
+    } else if (msg.poll) {
+      await processPollMessage(msg);
+    } else if (msg.dice) {
+      await processDiceMessage(msg);
+    } else if (msg.migrate_from_chat_id) {
+      await processMigrateFromChat(msg);
+    } else if (msg.migrate_to_chat_id) {
+      await processMigrateToChat(msg);
+    } else if (msg.channel_chat_created) {
+      await processChannelChatCreated(msg);
+    } else if (msg.supergroup_chat_created) {
+      await processSupergroupChatCreated(msg);
+    } else if (msg.successful_payment) {
+      await processSuccessfulPayment(msg);
+    } else if (msg.invoice) {
+      await processInvoiceMessage(msg);
+    } else if (msg.video_note) {
+      await processVideoNoteMessage(msg);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const processTextMessage = async (msg: Message) => {
   try {
     const chatId = msg.chat.id;
     const message = msg.text;
@@ -36,4 +105,152 @@ export const handleMessage = async (msg: Message) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+const processAudioMessage = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý tin nhắn âm thanh.'
+  );
+};
+
+const processDocumentMessage = async (msg: Message) => {
+  await sendMessage(msg.chat.id, 'Hiện tại tôi không hỗ trợ xử lý tài liệu.');
+};
+
+const processPhotoMessage = async (msg: Message) => {
+  await sendMessage(msg.chat.id, 'Hiện tại tôi không hỗ trợ xử lý hình ảnh.');
+};
+
+const processStickerMessage = async (msg: Message) => {
+  await sendMessage(msg.chat.id, 'Hiện tại tôi không hỗ trợ xử lý sticker.');
+};
+
+const processVideoMessage = async (msg: Message) => {
+  await sendMessage(msg.chat.id, 'Hiện tại tôi không hỗ trợ xử lý video.');
+};
+
+const processVoiceMessage = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý tin nhắn thoại.'
+  );
+};
+
+const processContactMessage = async (msg: Message) => {
+  await sendMessage(msg.chat.id, 'Hiện tại tôi không hỗ trợ xử lý danh bạ.');
+};
+
+const processLocationMessage = async (msg: Message) => {
+  await sendMessage(msg.chat.id, 'Hiện tại tôi không hỗ trợ xử lý vị trí.');
+};
+
+const processNewChatMembers = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý thành viên mới trong nhóm.'
+  );
+};
+
+const processLeftChatMember = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý thành viên rời nhóm.'
+  );
+};
+
+const processNewChatTitle = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý tiêu đề nhóm mới.'
+  );
+};
+
+const processNewChatPhoto = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý ảnh nhóm mới.'
+  );
+};
+
+const processDeleteChatPhoto = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý xóa ảnh nhóm.'
+  );
+};
+
+const processGroupChatCreated = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý nhóm mới được tạo.'
+  );
+};
+
+const processGameMessage = async (msg: Message) => {
+  await sendMessage(msg.chat.id, 'Hiện tại tôi không hỗ trợ xử lý trò chơi.');
+};
+
+const processPinnedMessage = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý tin nhắn ghim.'
+  );
+};
+
+const processPollMessage = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý cuộc thăm dò.'
+  );
+};
+
+const processDiceMessage = async (msg: Message) => {
+  await sendMessage(msg.chat.id, 'Hiện tại tôi không hỗ trợ xử lý xúc xắc.');
+};
+
+const processMigrateFromChat = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý việc di chuyển từ nhóm cũ.'
+  );
+};
+
+const processMigrateToChat = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý việc di chuyển đến nhóm mới.'
+  );
+};
+
+const processChannelChatCreated = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý kênh mới được tạo.'
+  );
+};
+
+const processSupergroupChatCreated = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý supergroup mới được tạo.'
+  );
+};
+
+const processSuccessfulPayment = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý thanh toán thành công.'
+  );
+};
+
+const processInvoiceMessage = async (msg: Message) => {
+  await sendMessage(msg.chat.id, 'Hiện tại tôi không hỗ trợ xử lý hóa đơn.');
+};
+
+const processVideoNoteMessage = async (msg: Message) => {
+  await sendMessage(
+    msg.chat.id,
+    'Hiện tại tôi không hỗ trợ xử lý ghi chú video.'
+  );
 };
