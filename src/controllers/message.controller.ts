@@ -1,20 +1,39 @@
+import { Message } from 'node-telegram-bot-api';
+
 import { askGemini } from '@/src/services/AIService';
+import { sendChatAction, sendMessage } from '@/src/services/BotService';
+import { generateChunkedResponse } from '@/src/helpers/utils';
 
-const MAX_MESSAGE_LENGTH = 4096; // Telegram message length limit
+export const handleMessage = async (msg: Message) => {
+  // only handle message from private chat
+  if (msg.chat.type !== 'private') {
+    return;
+  }
 
-export const handleMessage = async (message: string) => {
   try {
-    const generativeResponse = await askGemini(message);
+    const chatId = msg.chat.id;
+    const message = msg.text;
 
-    const substrings = [];
-
-    for (let i = 0; i < generativeResponse.length; i += MAX_MESSAGE_LENGTH) {
-      substrings.push(generativeResponse.substring(i, i + MAX_MESSAGE_LENGTH));
+    if (!message) {
+      return;
     }
 
-    return substrings;
+    await sendChatAction(chatId, 'typing');
+
+    const generativeResponse = await askGemini(message);
+
+    const resultArray = await generateChunkedResponse(generativeResponse);
+
+    if (resultArray.length === 0) {
+      return;
+    }
+
+    for (const result of resultArray) {
+      await sendMessage(chatId, result, {
+        reply_to_message_id: msg.message_id,
+      });
+    }
   } catch (error) {
     console.error(error);
-    return [];
   }
 };

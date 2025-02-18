@@ -28,7 +28,7 @@ const sendMessage = async (
   chatId: TelegramBot.ChatId,
   text: string,
   options?: TelegramBot.SendMessageOptions,
-  sendChatAction?: true
+  sendChatAction: boolean = true
 ) => {
   try {
     if (sendChatAction) {
@@ -48,7 +48,7 @@ const sendPhoto = async (
   photo: string | Stream | Buffer,
   options?: TelegramBot.SendPhotoOptions,
   fileOptions?: TelegramBot.FileOptions,
-  sendChatAction?: true
+  sendChatAction: boolean = true
 ) => {
   try {
     if (sendChatAction) {
@@ -61,4 +61,16 @@ const sendPhoto = async (
   }
 };
 
-export { setBotCommand, sendMessage, sendPhoto };
+const sendChatAction = async (
+  chatId: TelegramBot.ChatId,
+  action: TelegramBot.ChatAction,
+  options?: TelegramBot.SendChatActionOptions
+) => {
+  try {
+    await bot.sendChatAction(chatId, action, options);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { setBotCommand, sendMessage, sendPhoto, sendChatAction };

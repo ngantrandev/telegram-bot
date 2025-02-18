@@ -6,7 +6,7 @@ export const askGemini = async (message: string, promt = '') => {
   try {
     const res = await model.generateContent(generatedContent);
 
-    return 'Trả lời bởi AI.\n' + res.response.text();
+    return 'Trả lời bởi AI🤖🤖.\n' + res.response.text();
   } catch (error) {
     console.error(error);
     return 'Sorry, I cannot answer that.';
