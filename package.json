@@ -16,10 +16,12 @@
     "@google/generative-ai": "^0.21.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "node-telegram-bot-api": "^0.66.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
+    "@types/express": "^5.0.0",
     "@types/node-telegram-bot-api": "^0.64.7",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.0",
