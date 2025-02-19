@@ -14,6 +14,6 @@
     "resolveJsonModule": true, // allow import json file
     "moduleResolution": "nodenext"
   },
-  "include": ["src/**/*.ts", "src/ultil/ultil.lib.js"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
