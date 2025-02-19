@@ -1,3 +1,5 @@
+import express, { Request, Response } from 'express';
+
 import bot from '@/src/configs/TelegramBot';
 import { handleMessage } from '@/src/controllers/message.controller';
 import { SupportedCommands } from '@/src/helpers/utils';
@@ -6,6 +8,9 @@ import {
   handleStartCommand,
 } from '@/src/controllers/commands.controller';
 import { setBotCommand } from '@/src/services/BotService';
+import { APP_PORT } from '@/src/configs/env';
+
+const app = express();
 
 setBotCommand()
   .then((success) => {
@@ -113,4 +118,21 @@ bot.on('left_chat_member', (msg) => {
   console.error('log left_chat_member: ', msg); // => 'EFATAL'
 });
 
-console.log('You know what? I am running!');
+app.use(express.json());
+
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hello World!');
+});
+
+app.listen(APP_PORT, (error) => {
+  if (error) {
+    console.error('Failed to start server', error);
+    return;
+  }
+
+  console.log(`Server is running on port ${APP_PORT}`);
+});
+
+console.log('You know what? Bot is running!');
+
+export default app;
