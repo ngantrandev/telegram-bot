@@ -10,6 +10,8 @@ import {
 import { setBotCommand } from '@/src/services/BotService';
 import { APP_PORT } from '@/src/configs/env';
 
+import '@/src/configs/db.config';
+
 const app = express();
 
 setBotCommand()

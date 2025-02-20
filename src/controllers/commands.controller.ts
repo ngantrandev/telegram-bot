@@ -6,11 +6,19 @@ import {
   generateChunkedResponse,
   SupportedCommands,
 } from '@/src/helpers/utils';
+import { createUser } from '@/src/repositories/user.repository';
+import { createChat, createMessage } from '@/src/repositories/chat.repository';
 
 export const handleAskCommand = async (msg: Message) => {
   try {
     const chatId = msg.chat.id;
     const message = msg.text;
+
+    if (msg.from) {
+      await createUser(msg.from);
+    }
+    await createChat(msg.chat);
+    await createMessage(msg);
 
     // print message in format
     console.log(
@@ -46,10 +54,14 @@ export const handleAskCommand = async (msg: Message) => {
     }
 
     for (const result of resultArray) {
-      await sendMessage(chatId, result, {
+      const sentMessage = await sendMessage(chatId, result, {
         reply_to_message_id: msg.message_id,
         parse_mode: 'Markdown',
       });
+
+      if (sentMessage) {
+        await createMessage(sentMessage);
+      }
     }
   } catch (error) {
     console.error(error);
