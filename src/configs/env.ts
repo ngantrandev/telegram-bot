@@ -6,6 +6,7 @@ const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN as string;
 const APP_PORT = process.env.APP_PORT as string;
 const WEBHOOK_PATH = process.env.WEBHOOK_PATH as string;
 const WEBHOOK_URL = process.env.WEBHOOK_URL as string;
+const MONGO_CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING as string;
 
 // check important env variables
 if (!GOOGLE_API_KEY) {
@@ -28,4 +29,15 @@ if (!WEBHOOK_URL) {
   throw new Error('WEBHOOK_URL is not provided');
 }
 
-export { GOOGLE_API_KEY, TELEGRAM_TOKEN, APP_PORT, WEBHOOK_PATH, WEBHOOK_URL };
+if (!MONGO_CONNECTION_STRING) {
+  throw new Error('MONGO_CONNECTION_STRING is not provided');
+}
+
+export {
+  GOOGLE_API_KEY,
+  TELEGRAM_TOKEN,
+  APP_PORT,
+  WEBHOOK_PATH,
+  WEBHOOK_URL,
+  MONGO_CONNECTION_STRING,
+};
