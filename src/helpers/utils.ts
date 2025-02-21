@@ -66,6 +66,8 @@ export const getMimeTypeFromLink = async (url: string) => {
     console.log(`Getting file type from link: ${url}`);
     const { fileTypeFromBuffer } = await import('file-type');
 
+    console.log(`Fetching file from link: ${url}`);
+
     const res = await axios.get(url, {
       responseType: 'arraybuffer',
       headers: {
@@ -87,6 +89,7 @@ export const getMimeTypeFromLink = async (url: string) => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
