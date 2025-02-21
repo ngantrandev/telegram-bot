@@ -8,8 +8,11 @@ import {
   isvalidUrl,
   SupportedCommands,
 } from '@/src/helpers/utils';
-import { createUser } from '@/src/repositories/user.repository';
-import { createChat, createMessage } from '@/src/repositories/chat.repository';
+import { userRepositories } from '@/src/repositories/user.repository';
+import {
+  chatRepositories,
+  messageRepositories,
+} from '@/src/repositories/chat.repository';
 import { processImageFromLink } from '@/src/services/file.service';
 
 export const handleMessage = async (msg: Message) => {
@@ -43,7 +46,7 @@ export const handleMessage = async (msg: Message) => {
         );
 
         if (sentMessage) {
-          await createMessage(sentMessage);
+          await messageRepositories.createMessage(sentMessage);
         }
 
         return;
@@ -118,10 +121,10 @@ const processTextMessage = async (msg: Message) => {
     const message = msg.text;
 
     if (msg.from) {
-      await createUser(msg.from);
+      await userRepositories.createUser(msg.from);
     }
-    await createChat(msg.chat);
-    await createMessage(msg);
+    await chatRepositories.createChat(msg.chat);
+    await messageRepositories.createMessage(msg);
 
     // print message in format
     console.log(
@@ -148,7 +151,7 @@ const processTextMessage = async (msg: Message) => {
       });
 
       if (sentMessage) {
-        await createMessage(sentMessage);
+        await messageRepositories.createMessage(sentMessage);
       }
     }
   } catch (error) {

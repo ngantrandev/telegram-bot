@@ -68,5 +68,10 @@ const getMessageById = async (messageId: number) => {
   }
 };
 
-export { createChat, getChatById, updateChatById, deleteChatById };
-export { createMessage, getMessageById };
+export const chatRepositories = {
+  createChat,
+  getChatById,
+  updateChatById,
+  deleteChatById,
+};
+export const messageRepositories = { createMessage, getMessageById };

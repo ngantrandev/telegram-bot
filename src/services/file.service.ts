@@ -3,7 +3,7 @@ import { Message } from 'node-telegram-bot-api';
 
 import bot from '@/src/configs/TelegramBot';
 import botServices from '@/src/services/BotService';
-import { createMessage } from '../repositories/chat.repository';
+import { messageRepositories } from '../repositories/chat.repository';
 
 /**
  *
@@ -63,7 +63,7 @@ export const processImageFromLink = async (msg: Message, url: string) => {
       );
 
       if (sentMessage) {
-        await createMessage(sentMessage);
+        await messageRepositories.createMessage(sentMessage);
       }
     } else {
       const sentMessage = await botServices.sendMessage(
@@ -75,7 +75,7 @@ export const processImageFromLink = async (msg: Message, url: string) => {
       );
 
       if (sentMessage) {
-        await createMessage(sentMessage);
+        await messageRepositories.createMessage(sentMessage);
       }
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars

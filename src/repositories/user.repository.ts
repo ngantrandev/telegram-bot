@@ -49,4 +49,9 @@ const deleteUserById = async (userId: number) => {
   }
 };
 
-export { createUser, getUserById, updateUserById, deleteUserById };
+export const userRepositories = {
+  createUser,
+  getUserById,
+  updateUserById,
+  deleteUserById,
+};
