@@ -50,8 +50,8 @@ export const isvalidUrl = (url: string) => {
   try {
     new URL(url);
     return true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
   } catch (error) {
-    console.error(error);
     return false;
   }
 };
@@ -63,6 +63,7 @@ export const isvalidUrl = (url: string) => {
  */
 export const getMimeTypeFromLink = async (url: string) => {
   try {
+    console.log(`Getting file type from link: ${url}`);
     const { fileTypeFromBuffer } = await import('file-type');
 
     const res = await axios.get(url, {
@@ -72,9 +73,15 @@ export const getMimeTypeFromLink = async (url: string) => {
       },
     });
 
+    console.log(`Response status: ${res.status}`);
+
     const buffer = Buffer.from(res.data, 'binary');
 
+    console.log(`Buffer length: ${buffer.length}`);
+
     const fileType = await fileTypeFromBuffer(buffer);
+
+    console.log(`File type: ${fileType?.mime}`);
 
     return fileType;
 
