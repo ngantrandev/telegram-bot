@@ -65,7 +65,7 @@ const sendPhoto = async (
       await bot.sendChatAction(chatId, 'upload_photo');
     }
 
-    await bot.sendPhoto(chatId, photo, options, fileOptions);
+    return await bot.sendPhoto(chatId, photo, options, fileOptions);
   } catch (error) {
     console.error(error);
   }
@@ -83,4 +83,6 @@ const sendChatAction = async (
   }
 };
 
-export { setBotCommand, sendMessage, sendPhoto, sendChatAction };
+const botServices = { setBotCommand, sendMessage, sendPhoto, sendChatAction };
+
+export default botServices;

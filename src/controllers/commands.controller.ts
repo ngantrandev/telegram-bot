@@ -1,6 +1,6 @@
 import { Message } from 'node-telegram-bot-api';
 
-import { sendChatAction, sendMessage } from '@/src/services/BotService';
+import botServices from '@/src/services/BotService';
 import { askGemini } from '@/src/services/AIService';
 import {
   generateChunkedResponse,
@@ -29,15 +29,15 @@ export const handleAskCommand = async (msg: Message) => {
       return;
     }
 
+    await botServices.sendChatAction(chatId, 'typing');
+
     // remove first command word
     const generativeInput = message
       .replace(SupportedCommands.ask.slug, '')
       .trim();
 
-    await sendChatAction(chatId, 'typing');
-
     if (!generativeInput) {
-      await sendMessage(chatId, SupportedCommands.ask.example, {
+      await botServices.sendMessage(chatId, SupportedCommands.ask.example, {
         reply_to_message_id: msg.message_id,
         parse_mode: 'Markdown',
       });
@@ -54,7 +54,7 @@ export const handleAskCommand = async (msg: Message) => {
     }
 
     for (const result of resultArray) {
-      const sentMessage = await sendMessage(chatId, result, {
+      const sentMessage = await botServices.sendMessage(chatId, result, {
         reply_to_message_id: msg.message_id,
         parse_mode: 'Markdown',
       });
@@ -65,7 +65,10 @@ export const handleAskCommand = async (msg: Message) => {
     }
   } catch (error) {
     console.error(error);
-    await sendMessage(msg.chat.id, 'Đã xảy ra lỗi khi xử lý tin nhắn của bạn');
+    await botServices.sendMessage(
+      msg.chat.id,
+      'Đã xảy ra lỗi khi xử lý tin nhắn của bạn'
+    );
   }
 };
 
@@ -74,7 +77,7 @@ export const handleStartCommand = async (msg: Message) => {
   // short description about the bot
   const message =
     'Xin chào, mình là bot hỗ trợ tìm kiếm thông tin về các bài viết trên trang web...';
-  await sendMessage(chatId, message, {
+  await botServices.sendMessage(chatId, message, {
     reply_to_message_id: msg.message_id,
   });
 };

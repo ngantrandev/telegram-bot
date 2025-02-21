@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const MAX_MESSAGE_LENGTH = 4096; // Telegram message length limit
 
 export const SupportedCommands: {
@@ -41,5 +43,43 @@ export const generateChunkedResponse = async (response: string) => {
   } catch (error) {
     console.error(error);
     return [];
+  }
+};
+
+export const isvalidUrl = (url: string) => {
+  try {
+    new URL(url);
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+/**
+ *
+ * @param url
+ * @returns get file type from download link
+ */
+export const getMimeTypeFromLink = async (url: string) => {
+  try {
+    const { fileTypeFromBuffer } = await import('file-type');
+
+    const res = await axios.get(url, {
+      responseType: 'arraybuffer',
+      headers: {
+        Range: 'bytes=0-4095', // just need about first 4kb of the file to detect the type
+      },
+    });
+
+    const buffer = Buffer.from(res.data, 'binary');
+
+    const fileType = await fileTypeFromBuffer(buffer);
+
+    return fileType;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+  } catch (error) {
+    return null;
   }
 };

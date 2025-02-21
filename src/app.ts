@@ -7,14 +7,15 @@ import {
   handleAskCommand,
   handleStartCommand,
 } from '@/src/controllers/commands.controller';
-import { setBotCommand } from '@/src/services/BotService';
+import botServices from '@/src/services/BotService';
 import { APP_PORT } from '@/src/configs/env';
 
 import '@/src/configs/db.config';
 
 const app = express();
 
-setBotCommand()
+botServices
+  .setBotCommand()
   .then((success) => {
     if (success) {
       console.log('Bot commands set successfully');
