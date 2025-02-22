@@ -1,6 +1,6 @@
 import { Chat, Message } from 'node-telegram-bot-api';
 
-import { ChatModel, MessageModel } from '@/models/chat.model.js';
+import { ChatModel, MessageModel } from '@/models/chat.model.ts';
 
 /**
  *

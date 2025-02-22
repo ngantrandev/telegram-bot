@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { fileTypeFromBuffer } from 'file-type';
 
 const MAX_MESSAGE_LENGTH = 4096; // Telegram message length limit
 
@@ -63,8 +64,6 @@ export const isvalidUrl = (url: string) => {
  */
 export const getMimeTypeFromLink = async (url: string) => {
   try {
-    const { fileTypeFromBuffer } = await import('file-type');
-
     const res = await axios.get(url, {
       responseType: 'arraybuffer',
       headers: {

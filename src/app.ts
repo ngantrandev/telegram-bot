@@ -1,16 +1,16 @@
 import express, { Request, Response } from 'express';
 
-import bot from '@/configs/TelegramBot.js';
-import { handleMessage } from '@/controllers/message.controller.js';
-import { SupportedCommands } from '@/helpers/utils.js';
+import bot from '@/configs/TelegramBot.ts';
+import { handleMessage } from '@/controllers/message.controller.ts';
+import { SupportedCommands } from '@/helpers/utils.ts';
 import {
   handleAskCommand,
   handleStartCommand,
-} from '@/controllers/commands.controller.js';
-import botServices from '@/services/BotService.js';
-import { APP_PORT } from '@/configs/env.js';
+} from '@/controllers/commands.controller.ts';
+import botServices from '@/services/BotService.ts';
+import { APP_PORT } from '@/configs/env.ts';
 
-import '@/configs/db.config.js';
+import '@/configs/db.config.ts';
 
 const app = express();
 

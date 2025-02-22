@@ -1,6 +1,6 @@
 import { User } from 'node-telegram-bot-api';
 
-import UserModel from '@/models/user.model.js';
+import UserModel from '@/models/user.model.ts';
 
 /**
  *

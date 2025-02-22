@@ -1,8 +1,8 @@
 import { Stream } from 'stream';
 import TelegramBot from 'node-telegram-bot-api';
 
-import bot from '@/configs/TelegramBot.js';
-import { SupportedCommands } from '@/helpers/utils.js';
+import bot from '@/configs/TelegramBot.ts';
+import { SupportedCommands } from '@/helpers/utils.ts';
 
 /**
  *

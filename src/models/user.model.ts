@@ -1,4 +1,4 @@
-// models/User.js
+// models/User.ts
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
