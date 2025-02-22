@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "tsc --build",
-    "start": "node dist/app.js",
-    "production": "npm run build && node dist/app.js",
+    "build": "tsc --build && tsc-alias",
+    "bundle": "webpack --config webpack.config.js",
+    "start": "npm run build && node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "npx prettier . --write"
   },

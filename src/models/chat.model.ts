@@ -1,8 +1,8 @@
-// models/Message.ts
+// models/Message.js
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-import UserModel from '@/models/user.model.ts';
+import UserModel from '@/models/user.model.js';
 
 const ChatSchema = new Schema({
   id: { type: Number, required: true },

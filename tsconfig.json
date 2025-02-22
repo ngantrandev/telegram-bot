@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".", // Đặt gốc là thư mục chứa tsconfig.json
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"] // '@/' trỏ rõ ràng đến src
     },
     "outDir": "./dist",
     "rootDir": "./src",
@@ -12,10 +12,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "moduleResolution": "nodenext",
-    "allowImportingTsExtensions": true,
-    "noEmit": true
+    "moduleResolution": "nodenext"
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }
