@@ -1,16 +1,13 @@
 import { Message } from 'node-telegram-bot-api';
 
-import botServices from '@/src/services/BotService';
-import { askGemini } from '@/src/services/AIService';
-import {
-  generateChunkedResponse,
-  SupportedCommands,
-} from '@/src/helpers/utils';
-import { userRepositories } from '@/src/repositories/user.repository';
+import botServices from '@/services/BotService.ts';
+import { askGemini } from '@/services/AIService.js';
+import { generateChunkedResponse, SupportedCommands } from '@/helpers/utils.js';
+import { userRepositories } from '@/repositories/user.repository.js';
 import {
   chatRepositories,
   messageRepositories,
-} from '@/src/repositories/chat.repository';
+} from '@/repositories/chat.repository.js';
 
 export const handleAskCommand = async (msg: Message) => {
   try {

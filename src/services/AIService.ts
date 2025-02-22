@@ -1,4 +1,4 @@
-import model from '@/src/configs/GoogleGenerativeAI';
+import model from '@/configs/GoogleGenerativeAI.js';
 
 export const askGemini = async (message: string, promt = '') => {
   if (!message || message == '') {

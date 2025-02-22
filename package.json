@@ -1,13 +1,15 @@
 {
   "name": "bottele",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "start": "node dist/bundle.js",
     "production": "npm run build && node dist/bundle.js",
-    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/app.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --loader ts-node/esm --experimental-specifier-resolution=node -r tsconfig-paths/register src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "npx prettier . --write"
+    "format": "npx prettier . --write",
+    "exec": "node --loader ts-node/esm -r tsconfig-paths/register src/app.ts"
   },
   "author": "",
   "license": "ISC",

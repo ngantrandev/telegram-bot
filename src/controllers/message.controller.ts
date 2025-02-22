@@ -1,19 +1,19 @@
 import { Message } from 'node-telegram-bot-api';
 
-import { askGemini } from '@/src/services/AIService';
-import botServices from '@/src/services/BotService';
+import { askGemini } from '@/services/AIService.js';
+import botServices from '@/services/BotService.js';
 import {
   generateChunkedResponse,
   getMimeTypeFromLink,
   isvalidUrl,
   SupportedCommands,
-} from '@/src/helpers/utils';
-import { userRepositories } from '@/src/repositories/user.repository';
+} from '@/helpers/utils.js';
+import { userRepositories } from '@/repositories/user.repository.js';
 import {
   chatRepositories,
   messageRepositories,
-} from '@/src/repositories/chat.repository';
-import { processImageFromLink } from '@/src/services/file.service';
+} from '@/repositories/chat.repository.js';
+import { processImageFromLink } from '@/services/file.service.js';
 
 export const handleMessage = async (msg: Message) => {
   // only handle message from private chat

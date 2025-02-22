@@ -1,33 +1,34 @@
-const path = require('path');
-const webpackNodeExternals = require('webpack-node-externals');
+// webpack.config.js (đã chuyển sang ES module)
+import path from 'path';
+import webpackNodeExternals from 'webpack-node-externals';
 
-module.exports = {
-  entry: './src/app.ts', // Điểm vào của ứng dụng
-  target: 'node', // Đảm bảo Webpack tạo bundle cho Node.js
+export default {
+  entry: './src/app.ts',
+  target: 'node16', // hoặc node18
   output: {
-    filename: 'bundle.js', // Tên file xuất ra
-    path: path.resolve(__dirname, 'dist'), // Thư mục xuất ra
+    filename: 'bundle.js',
+    path: path.resolve(process.cwd(), 'dist'),
+    module: true,
+    library: { type: 'module' },
   },
-  externals: [webpackNodeExternals()], // Loại trừ các module node.js khỏi bundle
+  externals: [webpackNodeExternals()],
   resolve: {
-    extensions: ['.ts', '.js'], // Xử lý các file .ts và .js
+    extensions: ['.ts', '.js'],
     alias: {
-      '@': path.resolve(__dirname, './'), // Cấu hình alias để sử dụng '@' trong import
+      '@': path.resolve(process.cwd(), 'src'),
     },
   },
   module: {
     rules: [
       {
-        test: /\.ts$/, // Tìm các file TypeScript
-        use: 'ts-loader', // Sử dụng ts-loader để biên dịch TypeScript thành JavaScript
+        test: /\.ts$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
   },
-  mode: 'production', // Chạy Webpack ở chế độ production
-  resolveLoader: {
-    alias: {
-      'ts-loader': 'ts-loader', // Đảm bảo loader sử dụng đúng ts-loader
-    },
+  mode: 'production',
+  experiments: {
+    outputModule: true,
   },
 };

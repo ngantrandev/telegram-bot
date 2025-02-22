@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { Message } from 'node-telegram-bot-api';
 
-import bot from '@/src/configs/TelegramBot';
-import botServices from '@/src/services/BotService';
-import { messageRepositories } from '../repositories/chat.repository';
+import bot from '@/configs/TelegramBot.js';
+import botServices from '@/services/BotService.js';
+import { messageRepositories } from '@/repositories/chat.repository.js';
 
 /**
  *

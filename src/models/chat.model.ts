@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-import UserModel from '@/src/models/user.model';
+import UserModel from '@/models/user.model.js';
 
 const ChatSchema = new Schema({
   id: { type: Number, required: true },

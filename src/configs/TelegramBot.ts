@@ -1,6 +1,6 @@
-import { TELEGRAM_TOKEN } from '@/src/configs/env';
-
 import TelegramBot from 'node-telegram-bot-api';
+
+import { TELEGRAM_TOKEN } from '@/configs/env.js';
 
 /**
  * create a new instance of TelegramBot
