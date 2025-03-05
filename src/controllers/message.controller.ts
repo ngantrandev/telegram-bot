@@ -4,7 +4,6 @@ import { askGemini } from '@/services/AIService.js';
 import botServices from '@/services/BotService.js';
 import {
   generateChunkedResponse,
-  getMimeTypeFromLink,
   isvalidUrl,
   SupportedCommands,
 } from '@/helpers/utils.js';
@@ -13,7 +12,7 @@ import {
   chatRepositories,
   messageRepositories,
 } from '@/repositories/chat.repository.js';
-import { processImageFromLink } from '@/services/file.service.js';
+import { processUrl } from '@/services/file.service.js';
 
 export const handleMessage = async (msg: Message) => {
   // only handle message from private chat
@@ -34,27 +33,7 @@ export const handleMessage = async (msg: Message) => {
         return;
       }
 
-      const fileType = await getMimeTypeFromLink(msg.text);
-
-      if (!fileType) {
-        const sentMessage = await botServices.sendMessage(
-          msg.chat.id,
-          'Không thể tìm thấy loại tệp tin từ liên kết đã cung cấp.',
-          {
-            reply_to_message_id: msg.message_id,
-          }
-        );
-
-        if (sentMessage) {
-          await messageRepositories.createMessage(sentMessage);
-        }
-
-        return;
-      }
-
-      if (fileType.mime.startsWith('image/')) {
-        await processImageFromLink(msg, msg.text);
-      }
+      await processUrl(msg, msg.text);
     } else if (msg.audio) {
       await processAudioMessage(msg);
     } else if (msg.document) {

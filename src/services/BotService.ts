@@ -71,6 +71,27 @@ const sendPhoto = async (
   }
 };
 
+const sendVideo = async (
+  chatId: TelegramBot.ChatId,
+  video: string | Stream | Buffer,
+  options?: TelegramBot.SendVideoOptions,
+  fileOptions?: TelegramBot.FileOptions,
+  sendChatAction: boolean = true
+) => {
+  try {
+    if (sendChatAction) {
+      await bot.sendChatAction(chatId, 'upload_video');
+    }
+
+    return await bot.sendVideo(chatId, video, options, fileOptions);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
+    console.error(error);
+  }
+};
+
 const sendChatAction = async (
   chatId: TelegramBot.ChatId,
   action: TelegramBot.ChatAction,
@@ -83,6 +104,12 @@ const sendChatAction = async (
   }
 };
 
-const botServices = { setBotCommand, sendMessage, sendPhoto, sendChatAction };
+const botServices = {
+  setBotCommand,
+  sendMessage,
+  sendPhoto,
+  sendChatAction,
+  sendVideo,
+};
 
 export default botServices;
