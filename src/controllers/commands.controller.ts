@@ -75,8 +75,9 @@ export const handleAskCommand = async (msg: Message) => {
 export const handleStartCommand = async (msg: Message) => {
   const chatId = msg.chat.id;
   // short description about the bot
-  const message =
-    'Xin chào, mình là bot hỗ trợ tìm kiếm thông tin về các bài viết trên trang web...';
+  const message = `Xin chào, mình là bot hỗ trợ tìm kiếm thông tin về các bài viết trên trang web...
+    Bạn có thể hỏi mình bất cứ điều gì liên quan đến các bài viết trên trang web hoặc gửi đường link hình ảnh.
+    `;
   await botServices.sendMessage(chatId, message, {
     reply_to_message_id: msg.message_id,
   });
